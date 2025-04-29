@@ -47,6 +47,6 @@ mvn release:perform
 
 * Close and publish the staged artifacts from  [JBoss Nexus Repository](https://repository.jboss.org/nexus/)
 * Release the published version in [JIRA](https://issues.redhat.com/projects/DMR?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page&status=released-unreleased)
-* Update the Release Notes in [GitHub Release page](https://github.com/jbossas/jboss-dmr/releases)
+* Update the Release Notes in [GitHub Release page](https://github.com/wildfly/jboss-dmr/releases)
 
 
