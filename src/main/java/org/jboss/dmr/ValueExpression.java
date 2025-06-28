@@ -171,7 +171,9 @@ public final class ValueExpression implements Externalizable {
         } else if (value.equalsIgnoreCase("false")) {
             return false;
         } else {
-            throw new IllegalArgumentException();
+            // TODO i18n
+            throw new IllegalArgumentException("Cannot convert the string '" + value + "' resolved from expression '" +
+                    expressionString + "' to a boolean. Resolved string must be either 'true' or 'false', ignoring case");
         }
     }
 
@@ -188,7 +190,9 @@ public final class ValueExpression implements Externalizable {
         } else if (value.equalsIgnoreCase("false")) {
             return false;
         } else {
-            throw new IllegalArgumentException();
+            // TODO i18n
+            throw new IllegalArgumentException("Cannot convert the string '" + value + "' resolved from expression '" +
+                    expressionString + "' to a boolean. Resolved string must be either 'true' or 'false', ignoring case");
         }
     }
 

@@ -46,73 +46,73 @@ abstract class ModelValue implements Cloneable {
     }
 
     long asLong() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("long", ModelType.LONG));
     }
 
     long asLong(final long defVal) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("long", ModelType.LONG));
     }
 
     int asInt() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("int", ModelType.INT));
     }
 
     int asInt(final int defVal) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("int", ModelType.INT));
     }
 
     boolean asBoolean() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("boolean", ModelType.BOOLEAN));
     }
 
     boolean asBoolean(final boolean defVal) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("boolean", ModelType.BOOLEAN));
     }
 
     double asDouble() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("double", ModelType.DOUBLE));
     }
 
     double asDouble(final double defVal) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("double", ModelType.DOUBLE));
     }
 
     byte[] asBytes() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("byte[]", ModelType.BYTES));
     }
 
     BigDecimal asBigDecimal() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("BigDecimal", ModelType.BIG_DECIMAL));
     }
 
     BigInteger asBigInteger() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("BigInteger", ModelType.BIG_INTEGER));
     }
 
     abstract String asString();
 
     Property asProperty() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("Property", ModelType.PROPERTY));
     }
 
     List<Property> asPropertyList() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("List<Property>", ModelType.OBJECT));
     }
 
     ValueExpression asExpression() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("ValueExpression", ModelType.EXPRESSION));
     }
 
     ModelNode asObject() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     ModelNode getChild(final String name) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     ModelNode removeChild(final String name) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     ModelNode removeChild(final int index) {
@@ -120,11 +120,11 @@ abstract class ModelValue implements Cloneable {
     }
 
     ModelNode getChild(final int index) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     ModelNode addChild() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     ModelNode insertChild(int index) {
@@ -132,15 +132,15 @@ abstract class ModelValue implements Cloneable {
     }
 
     Set<String> getKeys() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("OBJECT", ModelType.OBJECT));
     }
 
     List<ModelNode> asList() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("List<ModelNode>", ModelType.LIST));
     }
 
     ModelType asType() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(getNonConversionMessageWithSuggestion("ModelType", ModelType.OBJECT));
     }
 
     ModelValue protect() {
@@ -385,5 +385,18 @@ abstract class ModelValue implements Cloneable {
 
     ModelNode requireChild(final int index) throws NoSuchElementException {
         throw new NoSuchElementException("No child exists at index [" + index + "]");
+    }
+
+    private String getNonConversionMessageWithSuggestion(String desiredConversion, ModelType suggestedType) {
+        String suggestion = suggestedType.name();
+        if (suggestedType == ModelType.LIST) {
+            suggestion = '[' + suggestion + ']';
+        } else if (suggestedType == ModelType.OBJECT) {
+            suggestion = '{' + suggestion + '}';
+        }
+
+        // TODO i18n
+        return "Cannot convert a node of type " + getType() + " to " + desiredConversion +
+                ". Recommended type for this conversion is " + suggestion;
     }
 }
