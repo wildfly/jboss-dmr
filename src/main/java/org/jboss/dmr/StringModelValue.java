@@ -150,7 +150,8 @@ final class StringModelValue extends ModelValue {
         } else if (value.equalsIgnoreCase("false")) {
             return false;
         } else {
-            throw new IllegalArgumentException();
+            // TODO i18n
+            throw new IllegalArgumentException("Cannot convert the string '" + value + "' to a boolean. Must be either 'true' or 'false', ignoring case");
         }
     }
 
